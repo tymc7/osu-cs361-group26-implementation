@@ -39,12 +39,12 @@ db.createPatient({
   'first_name': 	'Joe',
   'middle_name': 	'M',
   'last_name': 		'Schmoe',
-  'address': 			'123 Cherry Lane',
-  'city': 				'Berkeley',
-  'state': 				'CA',
-  'zipcode': 			'94710',
-  'phone_number': '1234567890',
-  'ssn': 					'123457896',
+  'address': 		'123 Cherry Lane',
+  'city': 			'Berkeley',
+  'state': 			'CA',
+  'zipcode': 		94710,
+  'phone_number':   1234567890,
+  'ssn': 			123457896,
   'symptoms': 		''
 }, (err, result) => {
 	console.log(err);
