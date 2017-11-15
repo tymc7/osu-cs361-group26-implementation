@@ -18,7 +18,7 @@ const PATIENT_SCHEMA = {
 
 function validatePatientSchema(patient) {
 	let keys = Object.keys(PATIENT_SCHEMA);
-	
+
 	for(var i = 0; i < keys.length; i++){
 		if(patient[keys[i]]){
 			if(typeof patient[keys[i]] !== PATIENT_SCHEMA[keys[i]])
@@ -44,10 +44,11 @@ function convertObjectToSQL(obj){
 exports.createPatient = (patient, cb) => {
 	// if(!validatePatientSchema(patient))
 	// 	throw new Error('Does not match Patient Schema');
-	let sqlStrings = convertObjectToSQL(patient);
+	// let sqlStrings = convertObjectToSQL(patient);
+    console.log(patient);
 	db.getConnection( (err, con) => {
 		if(err) throw err;
-		con.query(`INSERT INTO patients (${sqlStrings.columns}) VALUES (${sqlStrings.vaules})`, (error,result) => {
+        con.query('INSERT INTO a_patients SET ?', patient, (error,result) => {
 			if(error) throw error;
 			cb(result);
 		});
@@ -57,12 +58,12 @@ exports.createPatient = (patient, cb) => {
 exports.updatePatient = (patient) => {
 	if(!validatePatientSchema(patient))
 		throw new Error('Does not match Patient Schema');
-	
+
 }
 
 exports.searchForPatient = () => {
 }
 
 exports.validatePatient = () => {
-	
+
 }
