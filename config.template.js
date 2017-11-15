@@ -1,4 +1,6 @@
-// use this to create your config files
 module.exports = {
-  
+  host_name:	"",
+	dbname: 		"",
+	username:				"",
+	password:				""
 };
