@@ -1,5 +1,6 @@
 const bodyParser  = require('body-parser');
 const config      = require('./config.js');
+const db					= require('./database.js');
 const express     = require('express');
 const hbs         = require('express-handlebars');
 
@@ -33,6 +34,22 @@ app.use( (err, req, res, next) => {
   console.error(err.stack);
   res.send(500, '500 - Server Error');
 });
+
+db.createPatient({
+  'first_name': 	'Joe',
+  'middle_name': 	'M',
+  'last_name': 		'Schmoe',
+  'address': 			'123 Cherry Lane',
+  'city': 				'Berkeley',
+  'state': 				'CA',
+  'zipcode': 			'94710',
+  'phone_number': '1234567890',
+  'ssn': 					'123457896',
+  'symptoms': 		''
+}, (err, result) => {
+	console.log(err);
+	console.log(result);
+})
 
 // Start Server
 app.listen(PORT, () => console.log(`Express started on http://localhost:${PORT} press Ctrl-C to terminate.`) );
