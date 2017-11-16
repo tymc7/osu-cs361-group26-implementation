@@ -13,7 +13,7 @@ db.runMigrations('migrations').then(db.seedDb('a_patients', 'seeds'));
 const app = express();
 
 // Set view engine to be handlebars
-app.engine('.hbs', hbs({extname: '.hbs'}) );
+app.engine('.hbs', hbs({extname: '.hbs', defaultLayout: 'main'}) );
 app.set('view engine', '.hbs');
 
 // Setup Body Parser
@@ -25,6 +25,10 @@ app.use(express.static('public'));
 
 // Main Route
 app.get('/', ( req, res ) => res.render('index') );
+
+app.get('/check-in-new', ( req, res ) => res.render('checkin-new') );
+
+app.get('/check-in-returning', ( req, res ) => res.render('checkin-returning') );
 
 // Catchall to re-route back to beginning
 app.get('*', (req,res) => res.redirect('/') );

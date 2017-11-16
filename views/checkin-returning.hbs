@@ -1,12 +1,56 @@
-<h1>Check-In - Returning Patient</h1>
-<div>
-  <form action="">
-    First Name: <input type="text" name="first_name"><br>
-    Middle Name: <input type="text" name="middle_name"><br>
-    Last Name: <input type="text" name="last_name"><br>
-    Phone Number: <input type="number" name="phone_number"></br>
-    Please verify by entering Social Security Number: <input type="number" name="ssn"></br>
-    Symptoms: <input type="text" name="symptoms"></br>
-    <input type="submit" value="Submit">
-  </form>
-</div>  
+<!-- Empty Nav Bar titled "AI Doctor Kiosk" -->
+<nav class="navbar navbar-dark bg-primary">
+  <span class="navbar-brand mb-0 h1">AI Doctor Kiosk</span>
+</nav>
+
+<!-- Present content with Jumbotron -->
+<div class="jumbotron">
+<h1 class="display-3">Check-In - Returning Patient</h1>
+<hr class="my-4">
+<!-- Begin Form, split form into two sides, left and right -->
+<form action="" method="">
+  <div class="form-group row">
+  <!-- Left Side -->
+  <div class="form-group col-lg-6">
+
+  <div class="form-row">
+    <div class="form-group col-md-4">
+      <label for="first_name">First Name</label>
+      <input type="text" class="form-control" name="first_name">
+    </div>
+    <div class="form-group col-md-4">
+      <label for="middle_name">Middle Name</label>
+      <input type="text" class="form-control" name="middle_name">
+    </div>
+    <div class="form-group col-md-4">
+      <label for="first_name">Last Name</label>
+      <input type="text" class="form-control" name="last_name">
+    </div>
+  </div>
+
+  <div class="form-row">
+    <div class="form-group col-md-6">
+      <label for="phone_number">Phone Number</label>
+      <input type="number" class="form-control" name="phone_number">
+    </div>
+    <div class="form-group col-md-6">
+      <label for="ssn">Social Security Number</label>
+      <input type="number" class="form-control" name="ssn">
+    </div>
+  </div>
+  </div>
+  
+  <!-- Right side -->
+  <div class="form-group col-lg-6">
+    <div class="form-group col-md-12">
+    <label for="symptoms">Symptoms</label>
+    <textarea type="text" class="form-control" rows="12" name="symptoms"></textarea>
+    </div>
+  </div>
+
+  </div>
+
+  <!-- Submit button -->
+  <button type="submit" class="btn btn-primary">Login</button>
+</form>
+</div>
