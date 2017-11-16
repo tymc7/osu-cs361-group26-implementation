@@ -1,68 +1,55 @@
 const CONFIG 	= require('./config.js');
+const knex    = require('knex')(CONFIG); // DOCS: http://knexjs.org/#Builder
 const mysql		= require('mysql');
 
-const db = mysql.createPool(CONFIG);
-
-const PATIENT_SCHEMA = {
-  'first_name': 	'string',
-  'middle_name': 	'string',
-  'last_name': 		'string',
-  'address': 			'string',
-  'city': 				'string',
-  'state': 				'string',
-  'zipcode': 			'number',
-  'phone_number': 'number',
-  'ssn': 					'number',
-  'symptoms': 		'string'
-};
-
-function validatePatientSchema(patient) {
-	let keys = Object.keys(PATIENT_SCHEMA);
-	
-	for(var i = 0; i < keys.length; i++){
-		if(patient[keys[i]]){
-			if(typeof patient[keys[i]] !== PATIENT_SCHEMA[keys[i]])
-				return false;
-		} else {
-			return false;
-		}
-	}
-	return true;
+exports.runMigrations = (directory) => {
+  return knex.migrate.latest({
+    directory: directory
+  });
 }
 
-function convertObjectToSQL(obj){
- 	let columns = Object.keys(obj).join(',');
-	let values = Object.values(obj).join(',');
-	return {
-		columns: columns,
-		values:	 values
-	}
+exports.seedDb = (table, directory) => {
+  return knex(table).count('id as c').then( (c) => {
+    if(c[0].c === 0) {
+      console.log('SEEDING DATABASE');
+      return knex.seed.run({
+        directory: directory
+      });
+    } else {
+      console.log('DATABASE ALREADY SEEDED');
+      return null;
+    }
+  } );
+
 }
+
+// NEED TO FIND A BETTER WAY TO VALIDATE PATIENT
+// function validatePatientSchema(patient) {
+//
+// }
 
 // Creates Patient
 // Gets passed a Patient Object that should match Schema
-exports.createPatient = (patient, cb) => {
+exports.createRow = (table, data) => {
 	// if(!validatePatientSchema(patient))
 	// 	throw new Error('Does not match Patient Schema');
-	let sqlStrings = convertObjectToSQL(patient);
-	db.getConnection( (err, con) => {
-		if(err) throw err;
-		con.query(`INSERT INTO patients (${sqlStrings.columns}) VALUES (${sqlStrings.vaules})`, (error,result) => {
-			if(error) throw error;
-			cb(result);
-		});
-	})
+  return knex.table(table)
+    .returning('id')
+    .insert(data);
 }
 
-exports.updatePatient = (patient) => {
-	if(!validatePatientSchema(patient))
-		throw new Error('Does not match Patient Schema');
-	
+exports.updateRow = (table, id, updateObj) => {
+	// if(!validatePatientSchema(patient))
+	// 	throw new Error('Does not match Patient Schema');
+  return knex.table(table)
+    .returning('id')
+    .where('id', '=', id)
+    .update(updateObj);
 }
 
 exports.searchForPatient = () => {
 }
 
 exports.validatePatient = () => {
-	
+
 }
