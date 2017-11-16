@@ -30,6 +30,10 @@ app.get('/check-in-new', ( req, res ) => res.render('checkin-new') );
 
 app.get('/check-in-returning', ( req, res ) => res.render('checkin-returning') );
 
+app.get('/view-patient-info', ( req, res ) => res.render('view-patient-info') );
+
+app.get('/edit-patient-info', ( req, res ) => res.render('edit-patient-info') );
+
 // Catchall to re-route back to beginning
 app.get('*', (req,res) => res.redirect('/') );
 
