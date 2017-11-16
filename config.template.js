@@ -1,8 +1,10 @@
-// USE THIS CREATE YOUR CONFIG FILE
+// copy this to your config file
 module.exports = {
-    host:             '',
-    database:         '',
-    user:             '',
-    password:         '',
-    connectionLimit:  10
+    client:     'mysql',
+    connection: {
+      host:     '',
+      database: '',
+      user:     '',
+      password: '',
+    }
 };
