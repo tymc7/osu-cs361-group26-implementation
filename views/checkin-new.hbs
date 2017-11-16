@@ -1,37 +1,132 @@
-<h1>Check-In - New Patient</h1>
-<div>
-  <form action="">
-    <label for="first_name">
-      First Name: <input type="text" name="first_name" />
-    </label>
-    <label for="middle_name">
-      Middle Name: <input type="text" name="middle_name" />
-    </label>
-    <label for="last_name">
-      Last Name: <input type="text" name="last_name" />
-    </label>
-    <label for="address">
-      Address: <input type="text" name="addres" />
-    </label>
-    <label for="city">
-      City: <input type="text" name="city" />
-    </label>
-    <label for="state">
-       State: <input type="text" name="state" />
-    </label>
-    <label for="zipcode">
-      Zipcode: <input type="number" name="zipcode" />
-    </label>
-    <label for="phone_number">
-      Phone Number: <input type="number" name="phone_number" />
-    </label>
-    <label for="ssn">
-      Social-Security Number: <input type="number" name="ssn" />
-    </label>
-    <label for="symptoms">
-      Symptoms:
-      <textarea name="symptoms"></index>
-    </label>
-    <input type="submit" value="Submit">
-  </form>
+<!-- Empty Nav Bar titled "AI Doctor Kiosk" -->
+<nav class="navbar navbar-dark bg-primary">
+  <span class="navbar-brand mb-0 h1">AI Doctor Kiosk</span>
+</nav>
+
+<!-- Present content with Jumbotron -->
+<div class="jumbotron">
+<h1 class="display-3">Check-In - New Patient</h1>
+<hr class="my-4">
+<!-- Begin Form, split form into two sides, left and right -->
+<form action="" method="">
+  <div class="form-group row">
+  <!-- Left Side -->
+  <div class="form-group col-lg-6">
+
+  <div class="form-row">
+    <div class="form-group col-md-4">
+      <label for="first_name">First Name</label>
+      <input type="text" class="form-control" name="first_name">
+    </div>
+    <div class="form-group col-md-4">
+      <label for="middle_name">Middle Name</label>
+      <input type="text" class="form-control" name="middle_name">
+    </div>
+    <div class="form-group col-md-4">
+      <label for="first_name">Last Name</label>
+      <input type="text" class="form-control" name="last_name">
+    </div>
+  </div>
+
+  <div class="form-row">
+    <div class="form-group col-md-12">
+      <label for="address">Address</label>
+      <input type="text" class="form-control" name="address">
+    </div>
+  </div>
+
+  <div class="form-row">
+    <div class="form-group col-md-6">
+      <label for="city">City</label>
+      <input type="text" class="form-control" name="city">
+    </div>
+    <div class="form-group col-md-4">
+      <label for="state">State</label>
+      <select name="state" class="form-control">
+      <!-- US states option list referenced from https://www.freeformatter.com/usa-state-list-html-select.html -->
+        <option selected>---</option>
+        <option value="AL">AL</option>
+      <option value="AK">AK</option>
+      <option value="AR">AR</option>  
+      <option value="AZ">AZ</option>
+      <option value="CA">CA</option>
+      <option value="CO">CO</option>
+      <option value="CT">CT</option>
+      <option value="DC">DC</option>
+      <option value="DE">DE</option>
+      <option value="FL">FL</option>
+      <option value="GA">GA</option>
+      <option value="HI">HI</option>
+      <option value="IA">IA</option>  
+      <option value="ID">ID</option>
+      <option value="IL">IL</option>
+      <option value="IN">IN</option>
+      <option value="KS">KS</option>
+      <option value="KY">KY</option>
+      <option value="LA">LA</option>
+      <option value="MA">MA</option>
+      <option value="MD">MD</option>
+      <option value="ME">ME</option>
+      <option value="MI">MI</option>
+      <option value="MN">MN</option>
+      <option value="MO">MO</option>  
+      <option value="MS">MS</option>
+      <option value="MT">MT</option>
+      <option value="NC">NC</option>  
+      <option value="NE">NE</option>
+      <option value="NH">NH</option>
+      <option value="NJ">NJ</option>
+      <option value="NM">NM</option>      
+      <option value="NV">NV</option>
+      <option value="NY">NY</option>
+      <option value="ND">ND</option>
+      <option value="OH">OH</option>
+      <option value="OK">OK</option>
+      <option value="OR">OR</option>
+      <option value="PA">PA</option>
+      <option value="RI">RI</option>
+      <option value="SC">SC</option>
+      <option value="SD">SD</option>
+      <option value="TN">TN</option>
+      <option value="TX">TX</option>
+      <option value="UT">UT</option>
+      <option value="VT">VT</option>
+      <option value="VA">VA</option>
+      <option value="WA">WA</option>
+      <option value="WI">WI</option>  
+      <option value="WV">WV</option>
+      <option value="WY">WY</option>
+    </select>
+    </div>
+    <div class="form-group col-md-2">
+      <label for="zipcode">Zipcode</label>
+      <input type="text" class="form-control" name="zipcode">
+    </div>
+  </div>
+
+  <div class="form-row">
+    <div class="form-group col-md-6">
+      <label for="phone_number">Phone Number</label>
+      <input type="number" class="form-control" name="phone_number">
+    </div>
+    <div class="form-group col-md-6">
+      <label for="ssn">Social Security Number</label>
+      <input type="number" class="form-control" name="ssn">
+    </div>
+  </div>
+  </div>
+  
+  <!-- Right side -->
+  <div class="form-group col-lg-6">
+    <div class="form-group col-md-12">
+    <label for="symptoms">Symptoms</label>
+    <textarea type="text" class="form-control" rows="12" name="symptoms"></textarea>
+  </div>
+  </div>
+
+  </div>
+
+  <!-- Submit button -->
+  <button type="submit" class="btn btn-primary">Register</button>
+</form>
 </div>
