@@ -30,6 +30,24 @@ app.get('/check-in-new', ( req, res ) => res.render('checkin-new') );
 
 app.get('/check-in-returning', ( req, res ) => res.render('checkin-returning') );
 
+//Log-in and authentication
+app.post('/log-in', ( req, res ) => 
+    var context ={};
+    //All entries must be filled
+    if (req.body.fName != '' && req.body.ssn != '' && req.body.lName != ''){
+        //Query the database for a match
+        //If match is found.
+        if () {
+
+        //No match.
+        } else{
+        }
+    } else {
+    }
+    res.render('index') );
+
+app.get('/queue', ( req, res ) => res.render('queue') );
+
 // Catchall to re-route back to beginning
 app.get('*', (req,res) => res.redirect('/') );
 

@@ -26,10 +26,12 @@ function priorityQueue(){
         this.count++;
         this.heap.push(patient);
     } 
+
     this.prioritize = function(patient, newPriority) {
         patient.priority = newPriority;
         this.heap.updateItem(patient);
     }
+
     this.print = function(){
         var array = this.heap.toArray();
         console.log(array);
@@ -37,7 +39,6 @@ function priorityQueue(){
 }
 
 function patientNode ( pid, time, priority) {
-
     this.pid = pid;
     this.time = time;
     this.priority = priority;
@@ -59,19 +60,19 @@ queue.pushPatient(p2);
 queue.pushPatient(p3);
 
 //p2 > p1 > p3
-assert.deepEqual(queue.peekPatient(), p2);
-queue.popPatient();
-assert.deepEqual(queue.peekPatient(), p1);
-queue.popPatient();
-assert.deepEqual(queue.peekPatient(), p3);
+//assert.deepEqual(queue.peekPatient(), p2);
+//queue.popPatient();
+//assert.deepEqual(queue.peekPatient(), p1);
+//queue.popPatient();
+//assert.deepEqual(queue.peekPatient(), p3);
 
 
 //p1 > p2 > p3
-//queue.prioritize(p1, 100);
-//
-//assert.deepEqual(queue.peekPatient(), p1);
-//queue.popPatient();
-//assert.deepEqual(queue.peekPatient(), p2);
-//queue.popPatient();
-//assert.deepEqual(queue.peekPatient(), p3);
+queue.prioritize(p1, 100);
+
+assert.deepEqual(queue.peekPatient(), p1);
+queue.popPatient();
+assert.deepEqual(queue.peekPatient(), p2);
+queue.popPatient();
+assert.deepEqual(queue.peekPatient(), p3);
 
