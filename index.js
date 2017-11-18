@@ -1,70 +1,31 @@
 const bodyParser  = require('body-parser');
 const config      = require('./config.js');
-const db					= require('./database.js');
+const db          = require('./database.js');
 const express     = require('express');
 const hbs         = require('express-handlebars');
-const assert = require('assert');
-var Heap = require('heap');
+const assert      = require('assert');
+var Heap          = require('heap');
+var pq            = require('./queueManager.js');
+var patientNode   = require('./patientNode.js');
 
-// INitialize queue (delete later)
-  var queue = new priorityQueue();
+// Initialize queue (delete later)
+var queue = new pq();
 
-  var p1 = new patientNode(1, 'Ryan', 'Shin', 5, 2);
-  var p2 = new patientNode(2, 'Sean', 'Hinds', 7, 5);
-  var p3 = new patientNode(3, 'Foo', 'Bar', 9, 2);
-  var p4 = new patientNode(4, 'Peter', 'Parker', 8, 1);
-  var p5 = new patientNode(5, 'Chris', 'Smith', 1, 1);
-  var p6 = new patientNode(6, 'Du', 'Zheng', 9, 1);
 
-  queue.pushPatient(p1);
-  queue.pushPatient(p2);
-  queue.pushPatient(p3);
-  queue.pushPatient(p4);
-  queue.pushPatient(p5);
-  queue.pushPatient(p6);
+var p1 = new patientNode(1, 'Ryan', 'Shin', 5, 2);
+var p2 = new patientNode(2, 'Sean', 'Hinds', 7, 5);
+var p3 = new patientNode(3, 'Foo', 'Bar', 9, 2);
+var p4 = new patientNode(4, 'Peter', 'Parker', 8, 1);
+var p5 = new patientNode(5, 'Chris', 'Smith', 1, 1);
+var p6 = new patientNode(6, 'Du', 'Zheng', 9, 1);
 
-//Priority Queue Object Constructor
-function priorityQueue(){
-    this.count = 0;
-    this.heap = new Heap(function(p1,p2){
-        var test = p2.priority - p1.priority;
-        if (test == 0) {
-            // comparing real date/time is preferable
-            return p1.time - p2.time;
-        } else {
-            return test;
-        }
-    });
+queue.pushPatient(p1);
+queue.pushPatient(p2);
+queue.pushPatient(p3);
+queue.pushPatient(p4);
+queue.pushPatient(p5);
+queue.pushPatient(p6);
 
-    this.peekPatient = function(){
-        return this.heap.peek();
-    }
-
-    this.popPatient = function(){
-        this.heap.pop();
-    }
-
-    this.pushPatient = function(patient) {
-        this.count++;
-        this.heap.push(patient);
-    }
-    this.prioritize = function(patient, newPriority) {
-        patient.priority = newPriority;
-        this.heap.updateItem(patient);
-    }
-    this.getList = function(){
-        var array = this.heap.toArray();
-        return array;
-    }
-}
-
-function patientNode (pid, fname, lname, time, priority) {
-    this.pid = pid;
-    this.fname = fname;
-    this.lname = lname;
-    this.time = time;
-    this.priority = priority;
-}
 
 const PORT  = process.argv[2] || 3612;
 
@@ -93,14 +54,14 @@ app.get('/check-in-new', ( req, res ) => res.render('checkin-new') );
 app.get('/check-in-returning', ( req, res ) => res.render('checkin-returning') );
 
 app.get('/pop-patient', function(req, res) {
-  queue.popPatient();
-  res.send(null);
+    queue.popPatient();
+    res.send(null);
 });
 
 app.get('/queue-manager', function(req, res) {
-  var context = {};
-  context.list = queue.getList();
-  res.render('queue-manager', context);
+    var context = {};
+    context.list = queue.getList();
+    res.render('queue-manager', context);
 });
 
 // Catchall to re-route back to beginning
@@ -111,8 +72,8 @@ app.use( (req,res) => res.send(404, '404 - Not Found') );
 
 // Server Error
 app.use( (err, req, res, next) => {
-  console.error(err.stack);
-  res.send(500, '500 - Server Error');
+    console.error(err.stack);
+    res.send(500, '500 - Server Error');
 });
 
 // Start Server
