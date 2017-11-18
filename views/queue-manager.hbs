@@ -1,0 +1,47 @@
+	<script src='waitinglist.js'></script>
+
+	<h1 class="display-4">Waiting List</h1>
+		<table class="table" id="waiting-list-table">
+			<thead>
+				<tr>
+					<th>
+						Position
+					</th>
+					<th>
+						Patient ID
+					</th>
+					<th>
+						First Name
+					</th>
+					<th>
+						Last Name
+					</th>
+					<th>
+						Risk
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+				{{#each list}}
+				<tr>
+					<td>
+						{{@index}}
+					</td>
+					<td>
+						{{this.pid}}
+					</td>
+					<td>
+						{{this.fname}}
+					</td>
+					<td>
+						{{this.lname}}
+					</td>
+					<td>
+						{{this.priority}}
+					</td>
+				</tr>
+				{{/each}}
+			</tbody>
+		</table>
+
+		<button id="delButton">Pop Patient</button>
