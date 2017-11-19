@@ -27,6 +27,7 @@ function priorityQueue(){
     this.pushPatient = function(patient) {
         this.count++;
         this.heap.push(patient);
+    }
       
     this.prioritize = function(patient, newPriority) {
         patient.priority = newPriority;

@@ -52,7 +52,8 @@ app.get('/check-in-new', ( req, res ) => res.render('checkin-new') );
 
 app.get('/check-in-returning', ( req, res ) => res.render('checkin-returning') );
 
-app.get('/pop-patient', function(req, res) {
+app.get('/queue-manager/pop-patient', function(req, res) {
+    console.log('patient popped')
     queue.popPatient();
     res.send(null);
 });
@@ -61,6 +62,15 @@ app.get('/queue-manager', function(req, res) {
     var context = {};
     context.list = queue.getList();
     res.render('queue-manager', context);
+});
+
+app.get('/queue-manager/prioritize', function(req, res) {
+    var pid = req.query.pid;
+    var priority = req.query.priority;
+    //search list for patient
+    queue.prioritize(p1, priority);
+    res.send(null);
+
 });
 
 // Catchall to re-route back to beginning
