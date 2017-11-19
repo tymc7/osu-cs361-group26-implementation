@@ -1,6 +1,8 @@
 const assert = require('assert');
 var Heap = require('heap');
 
+module.exports = priorityQueue;
+
 //Priority Queue Object Constructor
 function priorityQueue(){
     this.count = 0;
@@ -25,14 +27,16 @@ function priorityQueue(){
     this.pushPatient = function(patient) {
         this.count++;
         this.heap.push(patient);
-    } 
+    }
+      
     this.prioritize = function(patient, newPriority) {
         patient.priority = newPriority;
         this.heap.updateItem(patient);
     }
-    this.print = function(){
+    this.getList = function(){
         var array = this.heap.toArray();
         console.log(array);
+        return array;
     }
 }
 
