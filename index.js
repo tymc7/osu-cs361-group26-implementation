@@ -1,8 +1,8 @@
-const bodyParser  = require('body-parser');
-const config      = require('./config.js');
-const db					= require('./database.js');
-const express     = require('express');
-const hbs         = require('express-handlebars');
+const bodyParser    = require('body-parser');
+const config        = require('./config.js');
+const db            = require('./database.js');
+const express       = require('express');
+const hbs           = require('express-handlebars');
 
 const PORT  = process.argv[2] || 3612;
 
@@ -29,6 +29,37 @@ app.get('/', ( req, res ) => res.render('index') );
 app.get('/check-in-new', ( req, res ) => res.render('checkin-new') );
 
 app.get('/check-in-returning', ( req, res ) => res.render('checkin-returning') );
+
+//Log-in and authentication
+app.post('/check-in-returning', (req, res) => {
+    var context = {};
+    console.log(req.body);
+    //All entries must be filled
+    if (req.body.first_name != '' && req.body.last_name != '' && req.body.ssn != '') {
+        //Query the database for a match
+        //If match is found.
+        patientId = 0;
+        db.existRow('a_patients', req.body).then( (row) => {
+            patientId = ( typeof row[0] !== 'undefined' && 'id' in row[0] && row[0].id ) ? row[0].id : 0;
+            console.log(patientId);
+            if ( patientId ) {
+                // Found matching patient
+                console.log('Found patient in db');
+                context.login_success = 1;
+                return res.render('checkin-returning', context);
+            } else {
+                //No match, go back to checkin-new page
+                console.log('Does not find patient in db');
+                context.login_failure = 1;
+                return res.render('checkin-returning', context);
+            }
+        });
+    } else {
+        console.log('Need first_name, last_name and ssn to login.');
+    }
+});
+
+app.get('/queue', ( req, res ) => res.render('queue') );
 
 // Catchall to re-route back to beginning
 app.get('*', (req,res) => res.redirect('/') );

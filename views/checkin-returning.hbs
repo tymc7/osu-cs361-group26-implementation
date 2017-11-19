@@ -7,8 +7,22 @@
 <div class="jumbotron">
 <h1 class="display-3">Check-In - Returning Patient</h1>
 <hr class="my-4">
+
+{{#if login_success}}
+    <hr class="my-4">
+    <div class="alert alert-success" role="alert">
+        <strong>Login Successful!</strong>
+    </div>
+{{/if}}
+{{#if login_failure}}
+    <hr class="my-4">
+    <div class="alert alert-danger" role="alert">
+        <strong>Login Failed!</strong>
+    </div>
+{{/if}}
+
 <!-- Begin Form, split form into two sides, left and right -->
-<form action="" method="">
+<form action="/check-in-returning" method="post">
   <div class="form-group row">
   <!-- Left Side -->
   <div class="form-group col-lg-6">
@@ -39,7 +53,7 @@
     </div>
   </div>
   </div>
-  
+
   <!-- Right side -->
   <div class="form-group col-lg-6">
     <div class="form-group col-md-12">
