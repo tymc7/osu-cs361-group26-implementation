@@ -71,26 +71,39 @@ app.get('/view-patient-info', ( req, res ) => res.render('view-patient-info') );
 
 app.get('/edit-patient-info', ( req, res ) => res.render('edit-patient-info') );
 
-app.get('/queue-manager/pop-patient', function(req, res) {
-    console.log('patient popped')
-    queue.popPatient();
-    res.send(null);
-});
-
+//Queue Manager
 app.get('/queue-manager', function(req, res) {
     var context = {};
     context.list = queue.getList();
     res.render('queue-manager', context);
 });
 
+app.get('/queue-manager/pop-patient', function(req, res) {
+    console.log('patient popped')
+    queue.popPatient();
+    res.send(null);
+});
+
 app.get('/queue-manager/prioritize', function(req, res) {
     var pid = req.query.pid;
     var priority = req.query.priority;
+    if (pid == '' || priority == ''){
+        //send error
+        console.log('EMPTY FIELDS');
+        res.send(201, null);
+        return;
+    }
     //search list for patient
-    queue.prioritize(p1, priority);
+    var flag = queue.prioritize(pid, priority);
+    if (flag == -1) {
+        //send error
+        console.log('NO MATCH');
+        res.send(202, null);
+        return;
+    }
     res.send(null);
-
 });
+
 //Log-in and authentication
 app.post('/check-in-returning', (req, res) => {
     var context = {};
