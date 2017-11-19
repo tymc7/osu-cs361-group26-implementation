@@ -1,6 +1,8 @@
 const assert = require('assert');
 var Heap = require('heap');
 
+module.exports = priorityQueue;
+
 //Priority Queue Object Constructor
 function priorityQueue(){
     this.count = 0;
@@ -27,14 +29,16 @@ function priorityQueue(){
         this.heap.push(patient);
     } 
 
+
     this.prioritize = function(patient, newPriority) {
         patient.priority = newPriority;
         this.heap.updateItem(patient);
     }
-
+    
     this.print = function(){
         var array = this.heap.toArray();
         console.log(array);
+        return array;
     }
 }
 
@@ -44,7 +48,7 @@ function patientNode ( pid, time, priority) {
     this.priority = priority;
 }
 
-// Test for pid's matching
+// test for pid's matching
 // Time should never match, but if they do, system shouldnt fail
 
 var p1 = new patientNode(2, 5, 2);
@@ -55,7 +59,7 @@ var p3 = new patientNode(3, 9, 2);
 
 var queue = new priorityQueue();
 
-queue.pushpatient(p1);
+queue.pushPatient(p1);
 queue.pushPatient(p2);
 queue.pushPatient(p3);
 
@@ -70,9 +74,14 @@ queue.pushPatient(p3);
 //p1 > p2 > p3
 queue.prioritize(p1, 100);
 
+
+queue.print();
+
 assert.deepEqual(queue.peekPatient(), p1);
 queue.popPatient();
 assert.deepEqual(queue.peekPatient(), p2);
 queue.popPatient();
 assert.deepEqual(queue.peekPatient(), p3);
 
+
+queue.print();
