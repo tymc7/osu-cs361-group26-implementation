@@ -8,16 +8,16 @@
 <h1 class="display-3">Check-In - Returning Patient</h1>
 <hr class="my-4">
 
-{{#if login_success}}
+{{#if success}}
     <hr class="my-4">
     <div class="alert alert-success" role="alert">
-        <strong>Login Successful!</strong>
+        <strong>{{message}}</strong>
     </div>
 {{/if}}
-{{#if login_failure}}
+{{#if failure}}
     <hr class="my-4">
     <div class="alert alert-danger" role="alert">
-        <strong>Login Failed!</strong>
+        <strong>{{message}}</strong>
     </div>
 {{/if}}
 

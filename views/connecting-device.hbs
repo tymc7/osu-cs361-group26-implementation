@@ -1,0 +1,25 @@
+<!-- Empty Nav Bar titled "AI Doctor Kiosk" -->
+<nav class="navbar navbar-dark bg-primary">
+  <span class="navbar-brand mb-0 h1">AI Doctor Kiosk</span>
+</nav>
+
+<!-- Present content with Jumbotron -->
+<div class="jumbotron">
+<h1 class="display-3">Connecting Device</h1>
+(To Be Completed)
+<hr class="my-4">
+
+{{#if success}}
+    <hr class="my-4">
+    <div class="alert alert-success" role="alert">
+        <strong>{{message}}</strong>
+    </div>
+{{/if}}
+{{#if failure}}
+    <hr class="my-4">
+    <div class="alert alert-danger" role="alert">
+        <strong>{{message}}</strong>
+    </div>
+{{/if}}
+
+</div>
