@@ -4,19 +4,19 @@ const db          = require('./database.js');
 const express     = require('express');
 const hbs         = require('express-handlebars');
 const assert      = require('assert');
-var Heap          = require('heap');
-var pq            = require('./queueManager.js');
-var patientNode   = require('./patientNode.js');
+const Heap        = require('heap');
+const pq          = require('./models/queueManager.js');
+const pn          = require('./models/patientNode.js');
 
-var queue = new pq();
+var queue = pq.priorityQueue();
 
 // Initialize queue (delete later)
-var p1 = new patientNode(1, 'Ryan', 'Shin', 5, 2);
-var p2 = new patientNode(2, 'Sean', 'Hinds', 7, 5);
-var p3 = new patientNode(3, 'Foo', 'Bar', 9, 2);
-var p4 = new patientNode(4, 'Peter', 'Parker', 8, 1);
-var p5 = new patientNode(5, 'Chris', 'Smith', 1, 1);
-var p6 = new patientNode(6, 'Du', 'Zheng', 9, 1);
+var p1 = pn.patientNode(1, 'Ryan', 'Shin', 5, 2);
+var p2 = pn.patientNode(2, 'Sean', 'Hinds', 7, 5);
+var p3 = pn.patientNode(3, 'Foo', 'Bar', 9, 2);
+var p4 = pn.patientNode(4, 'Peter', 'Parker', 8, 1);
+var p5 = pn.patientNode(5, 'Chris', 'Smith', 1, 1);
+var p6 = pn.patientNode(6, 'Du', 'Zheng', 9, 1);
 
 queue.pushPatient(p1);
 queue.pushPatient(p2);
@@ -51,22 +51,22 @@ app.get('/check-in-new', ( req, res ) => res.render('checkin-new') );
 
 app.get('/check-in-returning', ( req, res ) => res.render('checkin-returning') );
 
-//Log-in and authentication
-app.post('/log-in', ( req, res ) => {
-    var context ={};
-    //All entries must be filled
-    if (req.body.fName != '' && req.body.ssn != '' && req.body.lName != ''){
-        //Query the database for a match
-        //If match is found.
-        if () {
-        //No match.
-        } else{
-        }
-    } else {
-    }
-    res.render('index')
-    });
-      
+// //Log-in and authentication
+// app.post('/log-in', ( req, res ) => {
+//     var context ={};
+//     //All entries must be filled
+//     if (req.body.fName != '' && req.body.ssn != '' && req.body.lName != ''){
+//         //Query the database for a match
+//         //If match is found.
+//         if () {
+//         //No match.
+//         } else{
+//         }
+//     } else {
+//     }
+//     res.render('index')
+//     });
+
 app.get('/view-patient-info', ( req, res ) => res.render('view-patient-info') );
 
 app.get('/edit-patient-info', ( req, res ) => res.render('edit-patient-info') );
