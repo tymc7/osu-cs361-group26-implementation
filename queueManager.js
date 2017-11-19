@@ -27,7 +27,7 @@ function priorityQueue(){
     this.pushPatient = function(patient) {
         this.count++;
         this.heap.push(patient);
-    }
+      
     this.prioritize = function(patient, newPriority) {
         patient.priority = newPriority;
         this.heap.updateItem(patient);
@@ -38,4 +38,3 @@ function priorityQueue(){
         return array;
     }
 }
-
