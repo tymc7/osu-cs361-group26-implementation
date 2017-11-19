@@ -51,6 +51,22 @@ app.get('/check-in-new', ( req, res ) => res.render('checkin-new') );
 
 app.get('/check-in-returning', ( req, res ) => res.render('checkin-returning') );
 
+//Log-in and authentication
+app.post('/log-in', ( req, res ) => {
+    var context ={};
+    //All entries must be filled
+    if (req.body.fName != '' && req.body.ssn != '' && req.body.lName != ''){
+        //Query the database for a match
+        //If match is found.
+        if () {
+        //No match.
+        } else{
+        }
+    } else {
+    }
+    res.render('index')
+    });
+      
 app.get('/view-patient-info', ( req, res ) => res.render('view-patient-info') );
 
 app.get('/edit-patient-info', ( req, res ) => res.render('edit-patient-info') );

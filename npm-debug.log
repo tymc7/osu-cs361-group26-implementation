@@ -7,8 +7,9 @@
 6 silly lifecycle osu-cs361-group26-implementation@1.0.0~prestart: no script for prestart, continuing
 7 info lifecycle osu-cs361-group26-implementation@1.0.0~start: osu-cs361-group26-implementation@1.0.0
 8 verbose lifecycle osu-cs361-group26-implementation@1.0.0~start: unsafe-perm in lifecycle true
-9 verbose lifecycle osu-cs361-group26-implementation@1.0.0~start: PATH: /usr/lib/node_modules/npm/bin/node-gyp-bin:/nfs/stak/users/shinr/361group/osu-cs361-group26-implementation/node_modules/.bin:/usr/bin:/bin:/sbin:/usr/local/bin:/usr/bin:/usr/local/apps/bin:/nfs/stak/users/shinr/bin:.
-10 verbose lifecycle osu-cs361-group26-implementation@1.0.0~start: CWD: /nfs/stak/users/shinr/361group/osu-cs361-group26-implementation
+9 verbose lifecycle osu-cs361-group26-implementation@1.0.0~start: PATH: /usr/lib/node_modules/npm/bin/node-gyp-bin:/nfs/stak/users/shinr/osu-cs361-group26-implementation/node_modules/.bin:/usr/bin:/bin:/sbin:/usr/local/bin:/usr/bin:/usr/local/apps/bin:/nfs/stak/users/shinr/bin:.
+10 verbose lifecycle osu-cs361-group26-implementation@1.0.0~start: CWD: /nfs/stak/users/shinr/osu-cs361-group26-implementation
+
 11 silly lifecycle osu-cs361-group26-implementation@1.0.0~start: Args: [ '-c', 'node index.js' ]
 12 silly lifecycle osu-cs361-group26-implementation@1.0.0~start: Returned: code: 1  signal: null
 13 info lifecycle osu-cs361-group26-implementation@1.0.0~start: Failed to exec start script
@@ -23,7 +24,6 @@
 14 verbose stack     at maybeClose (internal/child_process.js:886:16)
 14 verbose stack     at Process.ChildProcess._handle.onexit (internal/child_process.js:226:5)
 15 verbose pkgid osu-cs361-group26-implementation@1.0.0
-16 verbose cwd /nfs/stak/users/shinr/361group/osu-cs361-group26-implementation
 17 error Linux 3.10.0-514.26.2.el7.x86_64
 18 error argv "/usr/bin/node" "/bin/npm" "start"
 19 error node v6.10.2
