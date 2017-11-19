@@ -8,6 +8,19 @@
 <h1 class="display-3">Check-In - Returning Patient</h1>
 <hr class="my-4">
 
+{{#if success}}
+    <hr class="my-4">
+    <div class="alert alert-success" role="alert">
+        <strong>{{message}}</strong>
+    </div>
+{{/if}}
+{{#if failure}}
+    <hr class="my-4">
+    <div class="alert alert-danger" role="alert">
+        <strong>{{message}}</strong>
+    </div>
+{{/if}}
+
 <!-- Begin Form, split form into two sides, left and right -->
 <form action="/check-in-returning" method="post">
   <div class="form-group row">

@@ -58,6 +58,9 @@ app.post('/check-in-returning', (req, res) => {
         });
     } else {
         console.log('Need first_name, last_name and ssn to login.');
+        context.failure = 1;
+        context.message = "Need First Name, Last Name and SSN to Login";
+        return res.render('checkin-returning', context);
     }
 });
 
