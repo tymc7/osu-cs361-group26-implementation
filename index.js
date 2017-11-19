@@ -8,10 +8,9 @@ var Heap          = require('heap');
 var pq            = require('./queueManager.js');
 var patientNode   = require('./patientNode.js');
 
-// Initialize queue (delete later)
 var queue = new pq();
 
-
+// Initialize queue (delete later)
 var p1 = new patientNode(1, 'Ryan', 'Shin', 5, 2);
 var p2 = new patientNode(2, 'Sean', 'Hinds', 7, 5);
 var p3 = new patientNode(3, 'Foo', 'Bar', 9, 2);
