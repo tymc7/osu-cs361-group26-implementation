@@ -22,7 +22,8 @@
     "express": "^4.16.2",
     "express-handlebars": "^3.0.0",
     "knex": "^0.14.0",
-    "mysql": "^2.15.0"
+    "mysql": "^2.15.0",
+    "heap": "^0.2.6"
   },
   "devDependencies": {
     "mocha": "^4.0.1"
