@@ -1,11 +1,10 @@
-const db   = require('../database.js');
-
-var assert = require('assert');
+const db      = require('../database.js');
+const assert  = require('assert');
 
 describe('authentication', () => {
 
   describe('#login-patient', () => {
-	  patient = {
+	  let patient = {
 		  'first_name': 'a',
 		  'last_name': 'c',
 		  'ssn': 111222
