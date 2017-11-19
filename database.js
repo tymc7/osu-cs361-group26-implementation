@@ -28,6 +28,19 @@ exports.seedDb = (table, directory) => {
 //
 // }
 
+// Check existstance, similar to searchForPatient
+exports.existRow = (table, data) => {
+    return knex.table(table)
+        .where({
+            first_name: data.first_name,
+            last_name: data.last_name,
+            ssn: data.ssn
+        })
+        .then( (row) =>  {
+            return row;
+        });
+}
+
 // Creates Patient
 // Gets passed a Patient Object that should match Schema
 exports.createRow = (table, data) => {
