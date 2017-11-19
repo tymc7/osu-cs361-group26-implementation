@@ -1,5 +1,6 @@
 const assert = require('assert');
 var Heap = require('heap');
+var patientNode = require('./patientNode');
 
 module.exports = priorityQueue;
 
@@ -29,13 +30,30 @@ function priorityQueue(){
         this.heap.push(patient);
     }
       
-    this.prioritize = function(patient, newPriority) {
-        patient.priority = newPriority;
-        this.heap.updateItem(patient);
+    this.prioritize = function(pid, newPriority) {
+        var array = this.heap.toArray();
+        console.log('Searching through array');
+
+        var patient;
+        var found = false;
+        for (var i = 0; i < array.length; i++){
+            if (array[i].pid == pid)
+            {
+                var found = true;
+                console.log('found:\n' + array[i]);
+                array[i].priority = newPriority;
+            }
+        }
+        if (!found) {
+            console.log('Invalid pid');
+            return -1;
+        }
+        //rebuild heap
+        this.heap.heapify();
+        return 1;
     }
     this.getList = function(){
         var array = this.heap.toArray();
-        console.log(array);
         return array;
     }
 }

@@ -33,7 +33,16 @@ function updatePriority() {
 
     req.addEventListener('load', function(){
         if(req.status >=200 && req.status <400){
-            window.location.href = '/queue-manager';
+            console.log(req.status);
+            if(req.status == 202){
+                console.log('no match');
+            }
+            else if (req.status == 201){
+                console.log('empty fields');
+            }
+            else {
+                window.location.href = '/queue-manager';
+            }
         } else {
             console.log("Error in network request: " + req.statusText);
         }

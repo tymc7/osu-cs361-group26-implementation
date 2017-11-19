@@ -67,10 +67,21 @@ app.get('/queue-manager', function(req, res) {
 app.get('/queue-manager/prioritize', function(req, res) {
     var pid = req.query.pid;
     var priority = req.query.priority;
+    if (pid == '' || priority == ''){
+        //send error
+        console.log('EMPTY FIELDS');
+        res.send(201, null);
+        return;
+    }
     //search list for patient
-    queue.prioritize(p1, priority);
+    var flag = queue.prioritize(pid, priority);
+    if (flag == -1) {
+        //send error
+        console.log('NO MATCH');
+        res.send(202, null);
+        return;
+    }
     res.send(null);
-
 });
 
 // Catchall to re-route back to beginning
