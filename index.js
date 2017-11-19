@@ -45,19 +45,25 @@ app.post('/check-in-returning', (req, res) => {
             if ( patientId ) {
                 // Found matching patient
                 console.log('Found patient in db');
-                context.login_success = 1;
-                return res.render('checkin-returning', context);
+                context.success = 1;
+                context.message = "Login Successful";
+                return res.redirect('/connecting-device');
             } else {
                 //No match, go back to checkin-new page
                 console.log('Does not find patient in db');
-                context.login_failure = 1;
-                return res.render('checkin-returning', context);
+                context.failure = 1;
+                context.message = "Login Failed";
+                return res.redirect('/check-in-new');
             }
         });
     } else {
         console.log('Need first_name, last_name and ssn to login.');
     }
 });
+
+// Connecting device page
+app.get('/connecting-device', ( req, res ) => res.render('connecting-device') );
+
 
 app.get('/queue', ( req, res ) => res.render('queue') );
 
