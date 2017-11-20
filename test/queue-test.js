@@ -5,9 +5,9 @@ const queue       = require('../models/queueManager.js');
 // test for pid's matching
 // Time should never match, but if they do, system shouldnt fail
 describe('queueManager', () => {
-  let p1        = patientNode.patientNode(1, 'Joe', 'Smith', '12:00', 100);
-  let p2        = patientNode.patientNode(1, 'Jill', 'Miller', '3:00', 300);
-  let p3        = patientNode.patientNode(1, 'Ann', 'Johnson', '7:00', 200);
+  let p1        = patientNode.patientNode(1, 'Joe', 'Smith', 6, 100);
+  let p2        = patientNode.patientNode(2, 'Jill', 'Miller', 3, 300);
+  let p3        = patientNode.patientNode(3, 'Ann', 'Johnson', 7, 200);
   let testqueue = queue.priorityQueue();
 
   before(() => {
@@ -42,8 +42,8 @@ describe('queueManager', () => {
 
   describe('#prioritize', () => {
     it('should reprioritize patient 1 to be 500', () => {
-      testqueue.prioritize(p1, 500);
-      assert.deepEqual(testqueue.peekPatient().priority, 500);
+      testqueue.prioritize(p1.pid, 500);
+      assert.equal(testqueue.peekPatient().priority, 500);
     });
     it('should move patient 1 to be first', () => {
       assert.deepEqual(testqueue.peekPatient(), p1);
