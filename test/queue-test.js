@@ -48,6 +48,9 @@ describe('queueManager', () => {
     it('should move patient 1 to be first', () => {
       assert.deepEqual(testqueue.peekPatient(), p1);
     });
+    it('should return null if patient is not found', () => {
+      assert.equal(testqueue.prioritize(10, 100), null);
+    })
   });
 
   describe('#getList', () => {
