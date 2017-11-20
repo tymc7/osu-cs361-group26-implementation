@@ -51,25 +51,16 @@ app.get('/check-in-new', ( req, res ) => res.render('checkin-new') );
 
 app.get('/check-in-returning', ( req, res ) => res.render('checkin-returning') );
 
-// //Log-in and authentication
-// app.post('/log-in', ( req, res ) => {
-//     var context ={};
-//     //All entries must be filled
-//     if (req.body.fName != '' && req.body.ssn != '' && req.body.lName != ''){
-//         //Query the database for a match
-//         //If match is found.
-//         if () {
-//         //No match.
-//         } else{
-//         }
-//     } else {
-//     }
-//     res.render('index')
-//     });
-
 app.get('/view-patient-info', ( req, res ) => res.render('view-patient-info') );
 
 app.get('/edit-patient-info', ( req, res ) => res.render('edit-patient-info') );
+
+//Queue Manager
+app.get('/queue-manager', function(req, res) {
+    var context = {};
+    context.list = queue.getList();
+    res.render('queue-manager', context);
+});
 
 app.get('/queue-manager/pop-patient', function(req, res) {
     console.log('patient popped')
@@ -77,20 +68,26 @@ app.get('/queue-manager/pop-patient', function(req, res) {
     res.send(null);
 });
 
-app.get('/queue-manager', function(req, res) {
-    var context = {};
-    context.list = queue.getList();
-    res.render('queue-manager', context);
-});
-
 app.get('/queue-manager/prioritize', function(req, res) {
     var pid = req.query.pid;
     var priority = req.query.priority;
+    if (priority == '' || pid == ''){
+        //send error
+        console.log('EMPTY FIELD');
+        res.status(203);
+        res.send(null);
+        return;
+    }
     //search list for patient
-    queue.prioritize(p1, priority);
+    var flag = queue.prioritize(pid, priority);
+    if (flag == -1) {
+        //send error
+        console.log('NO MATCH');
+        res.status(202);
+    }
     res.send(null);
-
 });
+
 //Log-in and authentication
 app.post('/check-in-returning', (req, res) => {
     var context = {};
@@ -111,7 +108,7 @@ app.post('/check-in-returning', (req, res) => {
                 return res.redirect('/connecting-device');
             } else {
                 //No match, go back to checkin-new page
-                console.log('Does not find patient in db');
+                console.log('Did not find patient in db');
                 context.failure = 1;
                 context.message = "Login Failed";
                 return res.redirect('/check-in-new');

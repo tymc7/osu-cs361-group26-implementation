@@ -28,9 +28,27 @@ function priorityQueue(){
     return heap.push(patient);
   }
 
-  function prioritize(patient, newPriority) {
-    patient.priority = newPriority;
-    return heap.updateItem(patient);
+  function prioritize(pid, newPriority) {
+    var array = this.heap.toArray();
+    console.log('Searching through array');
+
+    var patient;
+    var found = false;
+    for (var i = 0; i < array.length; i++){
+      if (array[i].pid == pid)
+      {
+        var found = true;
+        console.log('found:\n' + array[i]);
+        array[i].priority = newPriority;
+      }
+    }
+    if (!found) {
+      console.log('Invalid pid');
+      return -1;
+    }
+    //rebuild heap
+    this.heap.heapify();
+    return 1;
   }
 
   function getList(){
