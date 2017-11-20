@@ -34,11 +34,13 @@ function updatePriority() {
     req.addEventListener('load', function(){
         if(req.status >=200 && req.status <400){
             console.log(req.status);
-            if(req.status == 202){
+            if (req.status == 202){
                 console.log('no match');
+                //Add Error Message to HTML
             }
-            else if (req.status == 201){
+            else if (req.status == 203){
                 console.log('empty fields');
+                //Add Error Message to HTML
             }
             else {
                 window.location.href = '/queue-manager';

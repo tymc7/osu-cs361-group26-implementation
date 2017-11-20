@@ -51,22 +51,6 @@ app.get('/check-in-new', ( req, res ) => res.render('checkin-new') );
 
 app.get('/check-in-returning', ( req, res ) => res.render('checkin-returning') );
 
-// //Log-in and authentication
-// app.post('/log-in', ( req, res ) => {
-//     var context ={};
-//     //All entries must be filled
-//     if (req.body.fName != '' && req.body.ssn != '' && req.body.lName != ''){
-//         //Query the database for a match
-//         //If match is found.
-//         if () {
-//         //No match.
-//         } else{
-//         }
-//     } else {
-//     }
-//     res.render('index')
-//     });
-
 app.get('/view-patient-info', ( req, res ) => res.render('view-patient-info') );
 
 app.get('/edit-patient-info', ( req, res ) => res.render('edit-patient-info') );
@@ -87,10 +71,11 @@ app.get('/queue-manager/pop-patient', function(req, res) {
 app.get('/queue-manager/prioritize', function(req, res) {
     var pid = req.query.pid;
     var priority = req.query.priority;
-    if (pid == '' || priority == ''){
+    if (priority == '' || pid == ''){
         //send error
-        console.log('EMPTY FIELDS');
-        res.send(201, null);
+        console.log('EMPTY FIELD');
+        res.status(203);
+        res.send(null);
         return;
     }
     //search list for patient
@@ -98,8 +83,7 @@ app.get('/queue-manager/prioritize', function(req, res) {
     if (flag == -1) {
         //send error
         console.log('NO MATCH');
-        res.send(202, null);
-        return;
+        res.status(202);
     }
     res.send(null);
 });
@@ -124,7 +108,7 @@ app.post('/check-in-returning', (req, res) => {
                 return res.redirect('/connecting-device');
             } else {
                 //No match, go back to checkin-new page
-                console.log('Does not find patient in db');
+                console.log('Did not find patient in db');
                 context.failure = 1;
                 context.message = "Login Failed";
                 return res.redirect('/check-in-new');
