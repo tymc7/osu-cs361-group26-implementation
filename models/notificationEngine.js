@@ -23,7 +23,7 @@ exports.publishMessage = (publisher, message) => {
 // Create Publisher
 exports.createPublisher = (name) => {
   // Create row in a_publishers table
-  return db.createRow( 'a_publishers', { 'name':name } );
+  return db.createRow( 'a_publishers', { 'name':name } ).then(data => data[0]);
 }
 
 // Delete Publisher
