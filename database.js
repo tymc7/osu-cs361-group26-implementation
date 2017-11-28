@@ -60,6 +60,18 @@ exports.updateRow = (table, id, updateObj) => {
     .update(updateObj);
 }
 
+exports.deleteRow = (table, id) => {
+  return knex.table(table)
+    .where('id', '=', id)
+    .del();
+}
+
+exports.getPubSubList = (pubId) => {
+  return knex.select('subscriber').from('a_publishers')
+  .innerJoin('a_subscribers', `a_publishers.id`,'=', `a_subscribers.pub_id`)
+  .where(`a_publishers.id`, '=', pubId);
+}
+
 exports.searchForPatient = () => {
 }
 
