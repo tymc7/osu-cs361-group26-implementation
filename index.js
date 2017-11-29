@@ -96,6 +96,37 @@ app.get('/queue-manager/prioritize', function(req, res) {
     res.send(null);
 });
 
+//Register for new patient
+app.post('/check-in-new', (req, res) => {
+    var context = {};
+    console.log(req.body);
+    if (req.body.first_name != '' && req.body.last_name != '' && req.body.ssn != '') {
+        //Insert new patient into database
+        patientId = 0;
+        patientId = db.createRow('a_patients', req.body)
+            .then(data => data[0])
+            .catch( (e) => console.log(e, e.stack) );
+        if ( patientId ) {
+            // Creation Successful
+            console.log('Register successful');
+            context.success = 1;
+            context.message = "Register Successful";
+            return res.redirect('/connecting-device');
+        } else {
+            // Creation Failed
+            console.log('Register failed');
+            context.failure = 1;
+            context.message = "Register Failed";
+            return res.redirect('/check-in-new');
+        }
+    } else {
+        console.log('Need first_name, last_name and ssn to register.');
+        context.failure = 1;
+        context.message = "Need First Name, Last Name and SSN to Register";
+        return res.render('checkin-new', context);
+    }
+});
+
 //Log-in and authentication
 app.post('/check-in-returning', (req, res) => {
     var context = {};
