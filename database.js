@@ -11,12 +11,12 @@ exports.runMigrations = (directory) => {
 exports.seedDb = (table, directory) => {
   return knex(table).count('id as c').then( (c) => {
     if(c[0].c === 0) {
-      console.log('SEEDING DATABASE');
+      console.log('Seeding Database');
       return knex.seed.run({
         directory: directory
       });
     } else {
-      console.log('DATABASE ALREADY SEEDED');
+      console.log('Database already seeded');
       return null;
     }
   } );
@@ -69,7 +69,7 @@ exports.deleteRow = (table, id) => {
 exports.getPubSubList = (pubId) => {
   return knex.select('subscriber').from('a_publishers')
   .innerJoin('a_subscribers', `a_publishers.id`,'=', `a_subscribers.pub_id`)
-  .where(`a_publishers.id`, '=', pubId);
+  .where(`a_subscribers.pub_id`, '=', pubId);
 }
 
 exports.searchForPatient = () => {

@@ -1,8 +1,9 @@
 // Meant to happen during a migration
 exports.up = function(knex, Promise) {
+  console.log('Running PubSub migrations')
   return knex.schema.createTableIfNotExists('a_publishers', (t) => {
     t.increments('id').unsigned().primary();
-    t.string('name').notNull().unique();
+    t.string('name').notNull();
   })
   .createTableIfNotExists('a_subscribers', (t) => {
     t.increments('id').unsigned().primary();

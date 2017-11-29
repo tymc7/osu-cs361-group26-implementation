@@ -11,11 +11,11 @@ const pq            = require('./models/queueManager.js');
 
 var queue = pq.priorityQueue();
 
-let x = notification.createPublisher('test')
-.then( (id) => {
-  return notification.createSubscriber(23, `test${id[0]}@test.com`)
-  .then(notification.publishMessage(23, 'testingggggg' ))
-})
+// let x = notification.createPublisher('test')
+// .then( (id) => {
+//   return notification.createSubscriber(23, `test${id[0]}@test.com`)
+//   .then(notification.publishMessage(23, 'testingggggg' ))
+// })
 
 // // Initialize queue (delete later)
 // var p1 = pn.patientNode(1, 'Ryan', 'Shin', 5, 2);
@@ -35,6 +35,7 @@ let x = notification.createPublisher('test')
 const PORT  = process.argv[2] || 3612;
 
 // CREATES TABLE IF IT DOESN'T EXIST, AND SEEDS DATABASE
+console.log('Running Migrations');
 db.runMigrations('migrations').then(db.seedDb('a_patients', 'seeds'));
 
 // Setup Server
