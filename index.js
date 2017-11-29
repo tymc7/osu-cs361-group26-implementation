@@ -1,33 +1,41 @@
-const bodyParser  = require('body-parser');
-const config      = require('./config.js');
-const db          = require('./database.js');
-const express     = require('express');
-const hbs         = require('express-handlebars');
-const assert      = require('assert');
-const Heap        = require('heap');
-const pq          = require('./models/queueManager.js');
-const pn          = require('./models/patientNode.js');
+const assert        = require('assert');
+const bodyParser    = require('body-parser');
+const config        = require('./config.js');
+const db            = require('./database.js');
+const express       = require('express');
+const hbs           = require('express-handlebars');
+const Heap          = require('heap');
+const notification  = require('./models/notificationEngine.js');
+const pn            = require('./models/patientNode.js');
+const pq            = require('./models/queueManager.js');
 
 var queue = pq.priorityQueue();
 
-// Initialize queue (delete later)
-var p1 = pn.patientNode(1, 'Ryan', 'Shin', 5, 2);
-var p2 = pn.patientNode(2, 'Sean', 'Hinds', 7, 5);
-var p3 = pn.patientNode(3, 'Foo', 'Bar', 9, 2);
-var p4 = pn.patientNode(4, 'Peter', 'Parker', 8, 1);
-var p5 = pn.patientNode(5, 'Chris', 'Smith', 1, 1);
-var p6 = pn.patientNode(6, 'Du', 'Zheng', 9, 1);
+// let x = notification.createPublisher('test')
+// .then( (id) => {
+//   return notification.createSubscriber(23, `test${id[0]}@test.com`)
+//   .then(notification.publishMessage(23, 'testingggggg' ))
+// })
 
-queue.pushPatient(p1);
-queue.pushPatient(p2);
-queue.pushPatient(p3);
-queue.pushPatient(p4);
-queue.pushPatient(p5);
-queue.pushPatient(p6);
+// // Initialize queue (delete later)
+// var p1 = pn.patientNode(1, 'Ryan', 'Shin', 5, 2);
+// var p2 = pn.patientNode(2, 'Sean', 'Hinds', 7, 5);
+// var p3 = pn.patientNode(3, 'Foo', 'Bar', 9, 2);
+// var p4 = pn.patientNode(4, 'Peter', 'Parker', 8, 1);
+// var p5 = pn.patientNode(5, 'Chris', 'Smith', 1, 1);
+// var p6 = pn.patientNode(6, 'Du', 'Zheng', 9, 1);
+//
+// queue.pushPatient(p1);
+// queue.pushPatient(p2);
+// queue.pushPatient(p3);
+// queue.pushPatient(p4);
+// queue.pushPatient(p5);
+// queue.pushPatient(p6);
 
 const PORT  = process.argv[2] || 3612;
 
 // CREATES TABLE IF IT DOESN'T EXIST, AND SEEDS DATABASE
+console.log('Running Migrations');
 db.runMigrations('migrations').then(db.seedDb('a_patients', 'seeds'));
 
 // Setup Server

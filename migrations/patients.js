@@ -1,5 +1,6 @@
 // Meant to happen during a migration
 exports.up = function(knex, Promise) {
+  console.log('Running Patients Migration')
   return knex.schema.createTableIfNotExists('a_patients', (t) => {
     t.increments('id').unsigned().primary();
     t.timestamps(true, true)
