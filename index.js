@@ -79,7 +79,17 @@ app.get('/view-patient-info', ( req, res ) => {
     res.render('view-patient-info', context);
 });
 
-app.get('/edit-patient-info', ( req, res ) => res.render('edit-patient-info') );
+app.post('/edit-patient-info', ( req, res ) => {
+    var context = {};
+    //If there is no session, go to the main page.
+    if (!req.session.patientId) {
+        res.render('index');
+        return;
+    }
+    context = req.session.patientData;
+    context.patientId = req.session.patientId;
+    res.render('edit-patient-info', context);
+});
 
 //Queue Manager
 app.get('/queue-manager', function(req, res) {
