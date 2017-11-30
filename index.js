@@ -3,6 +3,7 @@ const bodyParser    = require('body-parser');
 const config        = require('./config.js');
 const db            = require('./database.js');
 const express       = require('express');
+const session       = require('express-session');
 const hbs           = require('express-handlebars');
 const Heap          = require('heap');
 const notification  = require('./models/notificationEngine.js');
@@ -40,6 +41,13 @@ db.runMigrations('migrations').then(db.seedDb('a_patients', 'seeds'));
 
 // Setup Server
 const app = express();
+
+// Setup session
+app.use(session({
+    secret: 'SuperSecretPassword',
+    resave: true,
+    saveUninitialized: true
+}));
 
 // Set view engine to be handlebars
 app.engine('.hbs', hbs({extname: '.hbs', defaultLayout: 'main'}) );
