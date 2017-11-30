@@ -67,7 +67,17 @@ app.get('/check-in-new', ( req, res ) => res.render('checkin-new') );
 
 app.get('/check-in-returning', ( req, res ) => res.render('checkin-returning') );
 
-app.get('/view-patient-info', ( req, res ) => res.render('view-patient-info') );
+app.get('/view-patient-info', ( req, res ) => {
+    var context = {};
+    //If there is no session, go to the main page.
+    if (!req.session.patientId) {
+        res.render('index');
+        return;
+    }
+    context = req.session.patientData;
+    context.patientId = req.session.patientId;
+    res.render('view-patient-info', context);
+});
 
 app.get('/edit-patient-info', ( req, res ) => res.render('edit-patient-info') );
 
@@ -122,7 +132,7 @@ app.post('/check-in-new', (req, res) => {
                     req.session.patientId = patientId;
                     req.session.patientData = req.body;
                     console.log(req.session);
-                    return res.redirect('/connecting-device');
+                    return res.redirect('/view-patient-info');
                 } else {
                     // Creation Failed
                     console.log('Register failed');
@@ -160,7 +170,7 @@ app.post('/check-in-returning', (req, res) => {
                 req.session.patientId = patientId;
                 req.session.patientData = req.body;
                 console.log(req.session);
-                return res.redirect('/connecting-device');
+                return res.redirect('/view-patient-info');
             } else {
                 //No match, go back to checkin-new page
                 console.log('Did not find patient in db');
