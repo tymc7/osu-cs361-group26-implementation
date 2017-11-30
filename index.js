@@ -111,22 +111,27 @@ app.post('/check-in-new', (req, res) => {
     if (req.body.first_name != '' && req.body.last_name != '' && req.body.ssn != '') {
         //Insert new patient into database
         patientId = 0;
-        patientId = db.createRow('a_patients', req.body)
-            .then(data => data[0])
+        db.createRow('a_patients', req.body)
+            .then((data) => {
+                patientId = data[0];
+                if ( patientId ) {
+                    // Creation Successful
+                    console.log('Register successful');
+                    context.success = 1;
+                    context.message = "Register Successful";
+                    req.session.patientId = patientId;
+                    req.session.patientData = req.body;
+                    console.log(req.session);
+                    return res.redirect('/connecting-device');
+                } else {
+                    // Creation Failed
+                    console.log('Register failed');
+                    context.failure = 1;
+                    context.message = "Register Failed";
+                    return res.redirect('/check-in-new');
+                }
+            })
             .catch( (e) => console.log(e, e.stack) );
-        if ( patientId ) {
-            // Creation Successful
-            console.log('Register successful');
-            context.success = 1;
-            context.message = "Register Successful";
-            return res.redirect('/connecting-device');
-        } else {
-            // Creation Failed
-            console.log('Register failed');
-            context.failure = 1;
-            context.message = "Register Failed";
-            return res.redirect('/check-in-new');
-        }
     } else {
         console.log('Need first_name, last_name and ssn to register.');
         context.failure = 1;
@@ -152,6 +157,9 @@ app.post('/check-in-returning', (req, res) => {
                 console.log('Found patient in db');
                 context.success = 1;
                 context.message = "Login Successful";
+                req.session.patientId = patientId;
+                req.session.patientData = req.body;
+                console.log(req.session);
                 return res.redirect('/connecting-device');
             } else {
                 //No match, go back to checkin-new page
