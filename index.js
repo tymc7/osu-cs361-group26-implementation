@@ -80,6 +80,19 @@ app.get('/view-patient-info', ( req, res ) => {
     res.render('view-patient-info', context);
 });
 
+app.post('/view-patient-info', ( req, res ) => {
+    var context = {};
+    //If there is no session, go to the main page.
+    if (!req.session.patientId) {
+        res.render('index');
+        return;
+    }
+    req.session.patientData = req.body;
+    context = req.session.patientData;
+    context.patientId = req.session.patientId;
+    res.render('view-patient-info', context);
+});
+
 app.post('/edit-patient-info', ( req, res ) => {
     var context = {};
     //If there is no session, go to the main page.
