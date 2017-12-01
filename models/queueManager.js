@@ -24,8 +24,21 @@ function priorityQueue(){
   }
 
   function pushPatient(patient) {
-    count++;
-    return heap.push(patient);
+    var array = this.heap.toArray();
+    var found = false;
+    // search to see if patient is already in queue
+    for (var i = 0; i < array.length; i++){
+      if (array[i].pid == patient.pid)
+      {
+        var found = true;
+        console.log('Patient is already in queue.');
+      }
+    }
+    // if not, add to queue.
+    if(!found){
+      count++;
+      return heap.push(patient);
+    }
   }
 
   function prioritize(pid, newPriority) {

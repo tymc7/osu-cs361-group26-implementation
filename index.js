@@ -19,15 +19,13 @@ var checkInTime = 0;
 //   .then(notification.publishMessage(23, 'testingggggg' ))
 // })
 
-// // Initialize queue (delete later)
-// var p1 = pn.patientNode(1, 'Ryan', 'Shin', 5, 2);
+// // Initialize queue
 var p2 = pn.patientNode(2, 'Sean', 'Hinds', 7, 5);
 var p3 = pn.patientNode(3, 'Foo', 'Bar', 9, 2);
 var p4 = pn.patientNode(4, 'Peter', 'Parker', 8, 1);
 var p5 = pn.patientNode(5, 'Chris', 'Smith', 1, 1);
 var p6 = pn.patientNode(6, 'Du', 'Zheng', 9, 1);
 
- //queue.pushPatient(p1);
 queue.pushPatient(p2);
 queue.pushPatient(p3);
 queue.pushPatient(p4);
