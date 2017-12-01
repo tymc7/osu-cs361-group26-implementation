@@ -87,10 +87,26 @@ app.post('/view-patient-info', ( req, res ) => {
         res.render('index');
         return;
     }
-    req.session.patientData = req.body;
-    context = req.session.patientData;
-    context.patientId = req.session.patientId;
-    res.render('view-patient-info', context);
+    db.updateRow('a_patients', req.session.patientId, req.body)
+        .then((data) => {
+            if (data) {
+                // Creation Successful
+                console.log('Edit successful');
+                context.success = 1;
+                context.message = "Edit Successful";
+                req.session.patientData = req.body;
+                context = req.session.patientData;
+                context.patientId = req.session.patientId;
+                return res.render('view-patient-info', context);
+            } else {
+                // Creation Failed
+                console.log('Edit failed');
+                context.failure = 1;
+                context.message = "Edit Failed";
+                return res.redirect('/view-patient-info');
+            }
+        })
+        .catch( (e) => console.log(e, e.stack) );
 });
 
 app.post('/edit-patient-info', ( req, res ) => {
