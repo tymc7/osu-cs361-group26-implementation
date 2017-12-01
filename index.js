@@ -3,6 +3,7 @@ const bodyParser    = require('body-parser');
 const config        = require('./config.js');
 const db            = require('./database.js');
 const express       = require('express');
+const session       = require('express-session');
 const hbs           = require('express-handlebars');
 const Heap          = require('heap');
 const notification  = require('./models/notificationEngine.js');
@@ -41,6 +42,13 @@ db.runMigrations('migrations').then(db.seedDb('a_patients', 'seeds'));
 // Setup Server
 const app = express();
 
+// Setup session
+app.use(session({
+    secret: 'SuperSecretPassword',
+    resave: true,
+    saveUninitialized: true
+}));
+
 // Set view engine to be handlebars
 app.engine('.hbs', hbs({extname: '.hbs', defaultLayout: 'main'}) );
 app.set('view engine', '.hbs');
@@ -59,9 +67,29 @@ app.get('/check-in-new', ( req, res ) => res.render('checkin-new') );
 
 app.get('/check-in-returning', ( req, res ) => res.render('checkin-returning') );
 
-app.get('/view-patient-info', ( req, res ) => res.render('view-patient-info') );
+app.get('/view-patient-info', ( req, res ) => {
+    var context = {};
+    //If there is no session, go to the main page.
+    if (!req.session.patientId) {
+        res.render('index');
+        return;
+    }
+    context = req.session.patientData;
+    context.patientId = req.session.patientId;
+    res.render('view-patient-info', context);
+});
 
-app.get('/edit-patient-info', ( req, res ) => res.render('edit-patient-info') );
+app.post('/edit-patient-info', ( req, res ) => {
+    var context = {};
+    //If there is no session, go to the main page.
+    if (!req.session.patientId) {
+        res.render('index');
+        return;
+    }
+    context = req.session.patientData;
+    context.patientId = req.session.patientId;
+    res.render('edit-patient-info', context);
+});
 
 //Queue Manager
 app.get('/queue-manager', function(req, res) {
@@ -103,22 +131,27 @@ app.post('/check-in-new', (req, res) => {
     if (req.body.first_name != '' && req.body.last_name != '' && req.body.ssn != '') {
         //Insert new patient into database
         patientId = 0;
-        patientId = db.createRow('a_patients', req.body)
-            .then(data => data[0])
+        db.createRow('a_patients', req.body)
+            .then((data) => {
+                patientId = data[0];
+                if ( patientId ) {
+                    // Creation Successful
+                    console.log('Register successful');
+                    context.success = 1;
+                    context.message = "Register Successful";
+                    req.session.patientId = patientId;
+                    req.session.patientData = req.body;
+                    console.log(req.session);
+                    return res.redirect('/view-patient-info');
+                } else {
+                    // Creation Failed
+                    console.log('Register failed');
+                    context.failure = 1;
+                    context.message = "Register Failed";
+                    return res.redirect('/check-in-new');
+                }
+            })
             .catch( (e) => console.log(e, e.stack) );
-        if ( patientId ) {
-            // Creation Successful
-            console.log('Register successful');
-            context.success = 1;
-            context.message = "Register Successful";
-            return res.redirect('/connecting-device');
-        } else {
-            // Creation Failed
-            console.log('Register failed');
-            context.failure = 1;
-            context.message = "Register Failed";
-            return res.redirect('/check-in-new');
-        }
     } else {
         console.log('Need first_name, last_name and ssn to register.');
         context.failure = 1;
@@ -144,7 +177,10 @@ app.post('/check-in-returning', (req, res) => {
                 console.log('Found patient in db');
                 context.success = 1;
                 context.message = "Login Successful";
-                return res.redirect('/connecting-device');
+                req.session.patientId = patientId;
+                req.session.patientData = req.body;
+                console.log(req.session);
+                return res.redirect('/view-patient-info');
             } else {
                 //No match, go back to checkin-new page
                 console.log('Did not find patient in db');

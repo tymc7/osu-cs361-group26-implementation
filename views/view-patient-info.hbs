@@ -9,8 +9,8 @@
 <hr class="my-4">
 
 <!-- Begin Form, split form into two sides, left and right -->
-<form action="" method="">
-{{#if patient}}
+<form action="/edit-patient-info" method="post">
+{{#if patientId}}
   <div class="form-group row">
   <!-- Left Side -->
   <div class="form-group col-lg-6">
@@ -62,7 +62,7 @@
     </div>
   </div>
   </div>
-  
+
   <!-- Right side -->
   <div class="form-group col-lg-6">
     <div class="form-group col-md-12">
@@ -74,8 +74,8 @@
   </div>
 
   <!-- Continue or Edit buttons -->
-  <a href="/edit-patient-info" class="btn btn-primary" id="continue">Edit</a>
-  <a href="/" class="btn btn-primary" id="continue">Continue</a>
+  <button type="submit" class="btn btn-primary">Edit</button>
+  <a href="/connecting-device" class="btn btn-primary" id="continue">Continue</a>
 {{/if}}
 </form>
 </div>

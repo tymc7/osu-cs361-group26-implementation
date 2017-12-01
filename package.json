@@ -21,9 +21,10 @@
     "body-parser": "^1.18.2",
     "express": "^4.16.2",
     "express-handlebars": "^3.0.0",
+    "express-session": "^1.15.6",
+    "heap": "^0.2.6",
     "knex": "^0.14.0",
-    "mysql": "^2.15.0",
-    "heap": "^0.2.6"
+    "mysql": "^2.15.0"
   },
   "devDependencies": {
     "mocha": "^4.0.1"
