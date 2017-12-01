@@ -51,6 +51,13 @@ exports.createRow = (table, data) => {
     .insert(data);
 }
 
+// Get Patient
+// Gets Patient Object using patientId
+exports.getRow = (table, id) => {
+  return knex.select('*').from(table)
+    .where('id', '=', id);
+}
+
 exports.updateRow = (table, id, updateObj) => {
 	// if(!validatePatientSchema(patient))
 	// 	throw new Error('Does not match Patient Schema');

@@ -80,6 +80,35 @@ app.get('/view-patient-info', ( req, res ) => {
     res.render('view-patient-info', context);
 });
 
+app.post('/view-patient-info', ( req, res ) => {
+    var context = {};
+    //If there is no session, go to the main page.
+    if (!req.session.patientId) {
+        res.render('index');
+        return;
+    }
+    db.updateRow('a_patients', req.session.patientId, req.body)
+        .then((data) => {
+            if (data) {
+                // Creation Successful
+                console.log('Edit successful');
+                context.success = 1;
+                context.message = "Edit Successful";
+                req.session.patientData = req.body;
+                context = req.session.patientData;
+                context.patientId = req.session.patientId;
+                return res.render('view-patient-info', context);
+            } else {
+                // Creation Failed
+                console.log('Edit failed');
+                context.failure = 1;
+                context.message = "Edit Failed";
+                return res.redirect('/view-patient-info');
+            }
+        })
+        .catch( (e) => console.log(e, e.stack) );
+});
+
 app.post('/edit-patient-info', ( req, res ) => {
     var context = {};
     //If there is no session, go to the main page.
@@ -144,7 +173,7 @@ app.post('/check-in-new', (req, res) => {
                     req.session.patientData = req.body;
                     var pnew = pn.patientNode(patientId, req.body.first_name, req.body.last_name, checkInTime++, 1);
                     queue.pushPatient(pnew);
-                    
+
                     console.log(req.session);
                     return res.redirect('/view-patient-info');
                 } else {
@@ -181,12 +210,16 @@ app.post('/check-in-returning', (req, res) => {
                 console.log('Found patient in db');
                 context.success = 1;
                 context.message = "Login Successful";
-                req.session.patientId = patientId;
-                req.session.patientData = req.body;
-                var pnew = pn.patientNode(patientId, req.body.first_name, req.body.last_name, checkInTime++, 1);
-                queue.pushPatient(pnew);
-                console.log(req.session);
-                return res.redirect('/view-patient-info');
+                db.getRow('a_patients', patientId).then( (row) => {
+                    console.log("Get patient by id: ");
+                    console.log(row);
+                    req.session.patientData = row[0];
+                    req.session.patientId = patientId;
+                    var pnew = pn.patientNode(patientId, req.body.first_name, req.body.last_name, checkInTime++, 1);
+                    queue.pushPatient(pnew);
+                    console.log(req.session);
+                    return res.redirect('/view-patient-info');
+                });
             } else {
                 //No match, go back to checkin-new page
                 console.log('Did not find patient in db');
