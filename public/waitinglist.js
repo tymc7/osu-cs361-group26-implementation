@@ -37,10 +37,12 @@ function updatePriority() {
             if (req.status == 202){
                 console.log('no match');
                 //Add Error Message to HTML
+                formErrorMessage("Patient ID does not match any in list");
             }
             else if (req.status == 203){
                 console.log('empty fields');
                 //Add Error Message to HTML
+                formErrorMessage("One or more fields are empty");
             }
             else {
                 window.location.href = '/queue-manager';
@@ -54,6 +56,17 @@ function updatePriority() {
     event.preventDefault();
 }
 
+
+function formErrorMessage(msg){
+    var formError = document.getElementById("form-error");
+    formError.innerHTML = "";
+    formError.classList.add("alert");
+    formError.classList.add("alert-danger");
+    var strong = document.createElement("strong");
+    var text = document.createTextNode(msg);
+    strong.appendChild(text);
+    formError.appendChild(strong);
+}
 
 function myFunctions(){
     bindEditButton();
