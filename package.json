@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "test": "mocha"
+    "test": "mocha",
+    "start-forever": "./node_modules/forever/bin/forever start index.js",
+    "stop-forever": "./node_modules/forever/bin/forever stop index.js"
   },
   "repository": {
     "type": "git",
@@ -26,6 +28,7 @@
     "heap": "^0.2.6"
   },
   "devDependencies": {
+    "forever": "^0.15.3",
     "mocha": "^4.0.1"
   }
 }
