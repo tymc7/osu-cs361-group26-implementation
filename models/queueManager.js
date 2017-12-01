@@ -30,7 +30,6 @@ function priorityQueue(){
 
   function prioritize(pid, newPriority) {
     var array = this.heap.toArray();
-    console.log('Searching through array');
 
     var patient;
     var found = false;
@@ -38,7 +37,7 @@ function priorityQueue(){
       if (array[i].pid == pid)
       {
         var found = true;
-        console.log('found:\n' + array[i]);
+        console.log('Found a match.');
         array[i].priority = newPriority;
       }
     }
