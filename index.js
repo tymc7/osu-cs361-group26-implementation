@@ -11,6 +11,7 @@ const pn            = require('./models/patientNode.js');
 const pq            = require('./models/queueManager.js');
 
 var queue = pq.priorityQueue();
+var checkInTime = 0;
 
 // let x = notification.createPublisher('test')
 // .then( (id) => {
@@ -20,18 +21,18 @@ var queue = pq.priorityQueue();
 
 // // Initialize queue (delete later)
 // var p1 = pn.patientNode(1, 'Ryan', 'Shin', 5, 2);
-// var p2 = pn.patientNode(2, 'Sean', 'Hinds', 7, 5);
-// var p3 = pn.patientNode(3, 'Foo', 'Bar', 9, 2);
-// var p4 = pn.patientNode(4, 'Peter', 'Parker', 8, 1);
-// var p5 = pn.patientNode(5, 'Chris', 'Smith', 1, 1);
-// var p6 = pn.patientNode(6, 'Du', 'Zheng', 9, 1);
-//
-// queue.pushPatient(p1);
-// queue.pushPatient(p2);
-// queue.pushPatient(p3);
-// queue.pushPatient(p4);
-// queue.pushPatient(p5);
-// queue.pushPatient(p6);
+var p2 = pn.patientNode(2, 'Sean', 'Hinds', 7, 5);
+var p3 = pn.patientNode(3, 'Foo', 'Bar', 9, 2);
+var p4 = pn.patientNode(4, 'Peter', 'Parker', 8, 1);
+var p5 = pn.patientNode(5, 'Chris', 'Smith', 1, 1);
+var p6 = pn.patientNode(6, 'Du', 'Zheng', 9, 1);
+
+ //queue.pushPatient(p1);
+queue.pushPatient(p2);
+queue.pushPatient(p3);
+queue.pushPatient(p4);
+queue.pushPatient(p5);
+queue.pushPatient(p6);
 
 const PORT  = process.argv[2] || 3612;
 
@@ -141,6 +142,9 @@ app.post('/check-in-new', (req, res) => {
                     context.message = "Register Successful";
                     req.session.patientId = patientId;
                     req.session.patientData = req.body;
+                    var pnew = pn.patientNode(patientId, req.body.first_name, req.body.last_name, checkInTime++, 1);
+                    queue.pushPatient(pnew);
+                    
                     console.log(req.session);
                     return res.redirect('/view-patient-info');
                 } else {
@@ -179,6 +183,8 @@ app.post('/check-in-returning', (req, res) => {
                 context.message = "Login Successful";
                 req.session.patientId = patientId;
                 req.session.patientData = req.body;
+                var pnew = pn.patientNode(patientId, req.body.first_name, req.body.last_name, checkInTime++, 1);
+                queue.pushPatient(pnew);
                 console.log(req.session);
                 return res.redirect('/view-patient-info');
             } else {

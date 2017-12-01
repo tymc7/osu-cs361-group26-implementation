@@ -30,23 +30,24 @@ function priorityQueue(){
 
   function prioritize(pid, newPriority) {
     var array = this.heap.toArray();
+
     var patient;
     var found = false;
-
     for (var i = 0; i < array.length; i++){
-      if (array[i].pid === pid) {
-        found = true;
+      if (array[i].pid == pid)
+      {
+        var found = true;
+        console.log('Found a match.');
         array[i].priority = newPriority;
-        patient = array[i];
       }
     }
-    
     if (!found) {
-      return null;
-    } else {
-      this.heap.heapify();
-      return patient;
+      console.log('Invalid pid');
+      return -1;
     }
+    //rebuild heap
+    this.heap.heapify();
+    return 1;
   }
 
   function getList(){
