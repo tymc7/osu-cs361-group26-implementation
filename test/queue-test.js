@@ -40,6 +40,14 @@ describe('queueManager', () => {
     });
   });
 
+  describe('#pushDuplicatePatient', () => {
+    it('should not add duplicate patient', () => {
+      let x = testqueue.count;
+      testqueue.pushPatient(p2);
+      assert.deepEqual(x, testqueue.count);
+    });
+  });
+
   describe('#prioritize', () => {
     it('should reprioritize patient 1 to be 500', () => {
       testqueue.prioritize(p1.pid, 500);
@@ -48,8 +56,8 @@ describe('queueManager', () => {
     it('should move patient 1 to be first', () => {
       assert.deepEqual(testqueue.peekPatient(), p1);
     });
-    it('should return null if patient is not found', () => {
-      assert.equal(testqueue.prioritize(10, 100), null);
+    it('should return -1 if patient is not found', () => {
+      assert.equal(testqueue.prioritize(10, 100), -1);
     })
   });
 
