@@ -31,7 +31,6 @@ function priorityQueue(){
       if (array[i].pid == patient.pid)
       {
         var found = true;
-        console.log('Patient is already in queue.');
       }
     }
     // if not, add to queue.
@@ -50,12 +49,10 @@ function priorityQueue(){
       if (array[i].pid == pid)
       {
         var found = true;
-        console.log('Found a match.');
         array[i].priority = newPriority;
       }
     }
     if (!found) {
-      console.log('Invalid pid');
       return -1;
     }
     //rebuild heap
